@@ -8,5 +8,8 @@ const register = async (req, res) => {
     res.status(StatusCodes.NOT_ACCEPTABLE).json({ msg: "user already exist , proceed to login" });
   }
   const user = await User.create(req.body);
+  res.status(StatusCodes.CREATED).json({ user });
 
 };
+
+module.exports = { register };

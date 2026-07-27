@@ -1,5 +1,5 @@
 const moongose = require("mongoose");
-const validator = require("express-validator");
+// const validator = require("express-validator");
 const bcrypt = require("bcryptjs");
 
 const UserSchema = new moongose.Schema({
@@ -12,10 +12,10 @@ const UserSchema = new moongose.Schema({
     type: String,
     required: [true, "Please provide email"],
     unique: true,
-    validate: {
-      validator: validator.isEmail,
-      message: "Please provide a valid email",
-    },
+    // validate: {
+    //   validator: validator.isEmail,
+    //   message: "Please provide a valid email",
+    // },
   },
   password: {
     type: String,
