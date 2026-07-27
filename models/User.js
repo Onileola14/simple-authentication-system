@@ -1,5 +1,6 @@
 const moongose = require("mongoose");
 const validator = require("express-validator");
+const bcrypt = require("bcryptjs");
 
 const UserSchema = new moongose.Schema({
   name: {
@@ -21,7 +22,16 @@ const UserSchema = new moongose.Schema({
     required: [true, "Please provide password"],
     minlength: 6,
   },
+
+  role: {
+    enum: ["admin", "user"],
+  },
 });
 
+UserSchema.pre("save", async function (next) {
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
 
-
+module.exports = moongose.model("User", UserSchema);

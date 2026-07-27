@@ -1,7 +1,9 @@
 require("dotenv").config();
+require('async-express-error')
 const express = require("express");
 const app = express();
 app.use(express.json());
+const authRouter = require("./routes/authRoute");
 
 
 
@@ -14,7 +16,7 @@ app.get("/", (req, res) => {
 
 
 
-
+app.use("/api/v2/auth", authRouter);
 
 
 
