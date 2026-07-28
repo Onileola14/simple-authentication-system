@@ -2,10 +2,11 @@ require("dotenv").config();
 require('async-express-error')
 const authRouter = require("./routes/authRoute");
 const connectDB = require("./db/connectDB");
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
 app.use(express.json());
-
+app.use(cookieParser(signature = process.env.JWT_SECRET));
 
 
 app.get("/", (req, res) => {
