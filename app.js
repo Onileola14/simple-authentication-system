@@ -2,6 +2,7 @@ require("dotenv").config();
 require('async-express-error')
 const notFound = require("./middlewares/notFound");
 const authRouter = require("./routes/authRoute");
+const userRouter = require("./routes/userRoute");
 const connectDB = require("./db/connectDB");
 const cookieParser = require("cookie-parser");
 const express = require("express");
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/v2/auth", authRouter);
+app.use("/api/v2/users", userRouter);
 
 
 app.use(notFound);
