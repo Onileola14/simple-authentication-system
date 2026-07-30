@@ -24,4 +24,26 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };
 
-module.exports = { register };
+const login = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: "please provide email and password" });
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "invalid credentials" });
+  }
+  const isPasswordCorrect = await user.comparePassword(password);
+  if (!isPasswordCorrect) {
+    res.status(StatusCodes.UNAUTHORIZED).json({ msg: "invalid credentials" });
+  }
+
+  const tokenUser = createTokenUser(user);
+  const token = createJWT({ payload: tokenUser });
+  attachCookiesToResponse(res, tokenUser);
+  res.status(StatusCodes.OK).json({ user: tokenUser });
+};
+
+module.exports = { register, login };
