@@ -8,7 +8,7 @@ const cookieParser = require("cookie-parser");
 const express = require("express");
 const app = express();
 app.use(express.json());
-app.use(cookieParser(signature = process.env.JWT_SECRET));
+app.use(cookieParser({ secret: process.env.JWT_SECRET }));
 
 
 app.get("/", (req, res) => {
