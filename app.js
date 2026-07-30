@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 
 app.use("/api/v2/auth", authRouter);
-app.use("/api/v2/users", userRouter);
+app.use("/api/v2/user", userRouter);
 
 
 app.use(notFound);
