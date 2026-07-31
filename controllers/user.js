@@ -2,7 +2,7 @@ const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllUsers = async (req, res) => {
-    const users = await User.find({}).select("-password");
+    const users = await User.find({ role: { $ne: "admin" } }).select("-password");
     res.status(StatusCodes.OK).json({ users });
 };
 const getSingleUser = async (req, res) => {
