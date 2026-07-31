@@ -1,4 +1,4 @@
-const isTokenValid = require("../utils/jwt");
+const { isTokenValid } = require("../utils/jwt");
 const { StatusCodes } = require("http-status-codes");
 const authenticateUser = async (req, res, next) => {
   const token = req.signedCookies.token;
@@ -22,4 +22,15 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-module.exports = authenticateUser;
+const authorizePermissions = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      res
+        .status(StatusCodes.FORBIDDEN)
+        .json({ msg: "Unauthorized to access this route" });
+    }
+    next();
+  };
+};
+
+module.exports = { authenticateUser, authorizePermissions };

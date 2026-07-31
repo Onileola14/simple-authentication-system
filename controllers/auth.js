@@ -18,7 +18,6 @@ const register = async (req, res) => {
 
   const user = await User.create({ name, password, email, role: userRole });
   const tokenUser = createTokenUser(user);
-  console.log(tokenUser);
   const token = createJWT({ payload: tokenUser });
   attachCookiesToResponse(res, tokenUser);
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
