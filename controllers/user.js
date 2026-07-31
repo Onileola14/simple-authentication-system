@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const { createPermission } = require("../utils/checkPermission");
 const { StatusCodes } = require("http-status-codes");
 
 const getAllUsers = async (req, res) => {
@@ -11,6 +12,7 @@ const getSingleUser = async (req, res) => {
     if (!user) {
         res.status(StatusCodes.NOT_FOUND).json({ msg: `No user with id : ${userId}` });
     }
+    createPermission(req.user, userId);
     res.status(StatusCodes.OK).json({ user });
 }
 
@@ -20,6 +22,7 @@ const getSingleUser = async (req, res) => {
     if (!user) {
         res.status(StatusCodes.NOT_FOUND).json({ msg: `No user with id : ${userId}` });
     }
+    createPermission(req.user, userId);
     res.status(StatusCodes.OK).json({ msg: "user deleted successfully" });
 };
 
@@ -31,7 +34,9 @@ const updateUser = async (req, res) => {
     }).select("-password");
     if (!user) {
         res.status(StatusCodes.NOT_FOUND).json({ msg: `No user with id : ${userId}` });
-    }       
+    } 
+    
+    createPermission(req.user, userId);
 
     res.status(StatusCodes.OK).json({ user });
 }   
