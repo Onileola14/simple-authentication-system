@@ -1,4 +1,4 @@
-const { isTokenValid } = require("../utils/jwt");
+const isTokenValid = require("../utils/jwt");
 const { StatusCodes } = require("http-status-codes");
 const authenticateUser = async (req, res, next) => {
   const token = req.signedCookies.token;
@@ -8,7 +8,7 @@ const authenticateUser = async (req, res, next) => {
         .status(StatusCodes.UNAUTHORIZED)
         .json({ msg: "Authentication invalid" });
     }
-    const payload = isTokenValid({ token });
+    const payload = isTokenValid(token);
     req.user = {
       userId: payload.userId,
       name: payload.name,
