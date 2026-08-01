@@ -1,8 +1,9 @@
-const {StatusCodes} = require("http-status-codes");
+const { StatusCodes } = require("http-status-codes");
+const { UnauthorizedError } = require("../errors");
 const createPermission = (reqUser, resourceUserId, res) => {
   if (reqUser.role === "admin") return;
   if (reqUser.userId === resourceUserId.toString()) return;
-  res.status(StatusCodes.FORBIDDEN).json({ msg: "Not authorized to access this route" });
+  throw new UnauthorizedError("Not authorized to access this route");
 };
 
 module.exports = { createPermission };

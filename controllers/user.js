@@ -14,26 +14,27 @@ const getAllUsers = async (req, res) => {
 };
 const getSingleUser = async (req, res) => {
   const { id: userId } = req.params;
+  createPermission(req.user, userId);
   const user = await User.findOne({ _id: userId }).select("-password");
   if (!user) {
     throw new NotFoundError(`No user with id : ${userId}`);
   }
-  createPermission(req.user, userId);
   res.status(StatusCodes.OK).json({ user });
 };
 
 const deleteUser = async (req, res) => {
   const { id: userId } = req.params;
+  createPermission(req.user, userId);
   const user = await User.findOneAndDelete({ _id: userId });
   if (!user) {
     throw new NotFoundError(`No user with id : ${userId}`);
   }
-  createPermission(req.user, userId);
   res.status(StatusCodes.OK).json({ msg: "user deleted successfully" });
 };
 
 const updateUser = async (req, res) => {
   const { id: userId } = req.params;
+  createPermission(req.user, userId);
   const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
     new: true,
     runValidators: true,
@@ -41,8 +42,6 @@ const updateUser = async (req, res) => {
   if (!user) {
     throw new NotFoundError(`No user with id : ${userId}`);
   }
-
-  createPermission(req.user, userId);
 
   res.status(StatusCodes.OK).json({ user });
 };

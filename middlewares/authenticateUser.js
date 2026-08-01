@@ -1,12 +1,11 @@
 const { isTokenValid } = require("../utils/jwt");
 const { StatusCodes } = require("http-status-codes");
+const { UnauthenticatedError, UnauthorizedError } = require("../errors");
 const authenticateUser = async (req, res, next) => {
   const token = req.signedCookies.token;
   try {
     if (!token) {
-      res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ msg: "Authentication invalid" });
+      throw new UnauthenticatedError("Authentication invalid");
     }
     const payload = isTokenValid(token);
     req.user = {
@@ -16,18 +15,14 @@ const authenticateUser = async (req, res, next) => {
     };
     next();
   } catch (error) {
-    res
-      .status(StatusCodes.UNAUTHORIZED)
-      .json({ msg: "Authentication invalid" });
+    throw new UnauthenticatedError("Authentication invalid");
   }
 };
 
 const authorizePermissions = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      res
-        .status(StatusCodes.FORBIDDEN)
-        .json({ msg: "Unauthorized to access this route" });
+      throw new UnauthorizedError("Unauthorized to access this route");
     }
     next();
   };
