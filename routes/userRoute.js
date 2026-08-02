@@ -11,7 +11,9 @@ const {
   deleteUser,
 } = require("../controllers/user");
 
-router.route("/").get(authenticateUser, authorizePermissions("admin"), getAllUsers);
+router
+  .route("/")
+  .get(authenticateUser, authorizePermissions("admin"), getAllUsers);
 router
   .route("/:id")
   .get(authenticateUser, getSingleUser)
