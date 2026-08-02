@@ -35,7 +35,13 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const { id: userId } = req.params;
   createPermission(req.user, userId);
-  const user = await User.findOneAndUpdate({ _id: userId }, req.body, {
+
+  const { name, email } = req.body;
+  const updates = {};
+  if (name !== undefined) updates.name = name;
+  if (email !== undefined) updates.email = email;
+
+  const user = await User.findOneAndUpdate({ _id: userId }, updates, {
     new: true,
     runValidators: true,
   }).select("-password");
@@ -45,4 +51,30 @@ const updateUser = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ user });
 };
-module.exports = { getAllUsers, getSingleUser, deleteUser, updateUser };
+
+const updateUserPassword = async (req, res) => {
+  const { id: userId } = req.params;
+  createPermission(req.user, userId);
+
+  const { oldPassword, newPassword } = req.body;
+  if (!oldPassword || !newPassword) {
+    throw new BadRequestError("please provide old and new password");
+  }
+
+  const user = await User.findOne({ _id: userId });
+  if (!user) {
+    throw new NotFoundError(`No user with id : ${userId}`);
+  }
+
+  const isPasswordCorrect = await user.comparePassword(oldPassword);
+  if (!isPasswordCorrect) {
+    throw new UnauthenticatedError("invalid credentials");
+  }
+
+  user.password = newPassword;
+  await user.save();
+
+  res.status(StatusCodes.OK).json({ msg: "password updated successfully" });
+};
+
+module.exports = { getAllUsers, getSingleUser, deleteUser, updateUser, updateUserPassword };
