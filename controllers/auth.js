@@ -12,7 +12,7 @@ const register = async (req, res) => {
   }
 
   const isFirstAccount = (await User.countDocuments({})) === 0;
-  const userRole = isFirstAccount ? "admin" : role;
+  const userRole = isFirstAccount ? "admin" : 'user';
   req.body.role = userRole;
 
   const user = await User.create({ name, password, email, role: userRole });
