@@ -20,6 +20,7 @@ router
   .get(authenticateUser, getSingleUser)
   .patch(authenticateUser, updateUser)
   .delete(authenticateUser, deleteUser);
+  
 router.route("/:id/password").patch(authenticateUser, updateUserPassword);
 
 module.exports = router;
