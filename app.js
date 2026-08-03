@@ -4,6 +4,8 @@ require("async-express-error");
 // Third-party packages
 const express = require("express");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const helm = require("helmet");
 
 // Local modules
 const connectDB = require("./db/connectDB");
@@ -17,6 +19,8 @@ const app = express();
 // Global middleware
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(helm());
+app.use(cors());
 
 // Routes
 app.get("/", (req, res) => {
