@@ -1,21 +1,19 @@
-const moongose = require("mongoose");
-// const validator = require("express-validator");
+const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const UserSchema = new moongose.Schema({
+const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please provide name"],
     minlength: 3,
+    trim: true,
   },
   email: {
     type: String,
     required: [true, "Please provide email"],
     unique: true,
-    // validate: {
-    //   validator: validator.isEmail,
-    //   message: "Please provide a valid email",
-    // },
+    lowercase: true,
+    trim: true,
   },
   password: {
     type: String,
@@ -39,9 +37,8 @@ UserSchema.pre("save", async function () {
 });
 
 UserSchema.methods.comparePassword = async function (userPassword) {
-  
   const isMatch = await bcrypt.compare(userPassword, this.password);
   return isMatch;
 };
 
-module.exports = moongose.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema);
