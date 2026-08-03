@@ -5,7 +5,7 @@ require("async-express-error");
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
-const helm = require("helmet");
+const helmet = require("helmet");
 
 // Local modules
 const connectDB = require("./db/connectDB");
@@ -15,11 +15,11 @@ const authRouter = require("./routes/authRoute");
 const userRouter = require("./routes/userRoute");
 
 const app = express();
-
+app.set("trust proxy", 1);
 // Global middleware
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
-app.use(helm());
+app.use(helmet());
 app.use(cors());
 
 // Routes
