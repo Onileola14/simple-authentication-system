@@ -11,6 +11,10 @@ const {
   deleteUser,
   updateUserPassword,
 } = require("../controllers/user");
+const {
+  validateUpdateUser,
+  validateUpdatePassword,
+} = require("../middlewares/validators");
 
 router
   .route("/")
@@ -21,6 +25,6 @@ router
   .patch(authenticateUser, updateUser)
   .delete(authenticateUser, deleteUser);
   
-router.route("/:id/password").patch(authenticateUser, updateUserPassword);
+router.route("/:id/password").patch(authenticateUser, validateUpdatePassword, updateUserPassword);
 
 module.exports = router;
