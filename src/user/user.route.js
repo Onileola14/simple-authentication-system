@@ -22,7 +22,7 @@ router
 router
   .route("/:id")
   .get(authenticateUser, getSingleUser)
-  .patch(authenticateUser, updateUser)
+  .patch(authenticateUser, validateUpdateUser, updateUser)
   .delete(authenticateUser, deleteUser);
   
 router.route("/:id/password").patch(authenticateUser, validateUpdatePassword, updateUserPassword);
