@@ -1,4 +1,4 @@
-const { isTokenValid } = require("../utils/jwt");
+const { isTokenValid } = require("../shared/jwt");
 const { StatusCodes } = require("http-status-codes");
 const { UnauthenticatedError, UnauthorizedError } = require("../errors");
 const authenticateUser = async (req, res, next) => {

@@ -1,5 +1,5 @@
 const User = require("../models/User");
-const { createPermission } = require("../utils/checkPermission");
+const { createPermission } = require("../shared/checkPermission");
 const { StatusCodes } = require("http-status-codes");
 const {
   UnauthenticatedError,

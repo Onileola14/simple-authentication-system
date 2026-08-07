@@ -3,14 +3,14 @@ const router = express.Router();
 const {
   authenticateUser,
   authorizePermissions,
-} = require("../middlewares/authenticateUser");
+} = require("./authenticateuser.middleware");
 const {
   getAllUsers,
   getSingleUser,
   updateUser,
   deleteUser,
   updateUserPassword,
-} = require("../controllers/user");
+} = require("./user.controller");
 const {
   validateUpdateUser,
   validateUpdatePassword,

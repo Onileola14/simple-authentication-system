@@ -1,8 +1,8 @@
 const User = require("../models/User");
 const { StatusCodes } = require("http-status-codes");
 const { UnauthenticatedError, NotFoundError, BadRequestError, UnauthorizedError } = require("../errors");
-const { createJWT, attachCookiesToResponse } = require("../utils/jwt");
-const createTokenUser = require("../utils/createTokenUser");
+const { createJWT, attachCookiesToResponse } = require("../shared/jwt");
+const createTokenUser = require("../shared/createTokenUser");
 
 const register = async (req, res) => {
   const { name, password, email, role } = req.body;

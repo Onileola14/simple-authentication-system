@@ -11,8 +11,8 @@ const helmet = require("helmet");
 const connectDB = require("./db/connectDB");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 const notFound = require("./middlewares/notFound");
-const authRouter = require("./routes/authRoute");
-const userRouter = require("./routes/userRoute");
+const authRouter = require("./auth/auth.route");
+const userRouter = require("./user/user.route");
 
 const app = express();
 app.set("trust proxy", 1);
