@@ -1,18 +1,22 @@
-require("dotenv").config();
-require("async-express-error");
+
+import dotenv from "dotenv";
+dotenv.config();
+import "express-async-error";
 
 // Third-party packages
-const express = require("express");
-const cookieParser = require("cookie-parser");
-const cors = require("cors");
-const helmet = require("helmet");
+import express from "express";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import helmet from "helmet";
+
 
 // Local modules
-const connectDB = require("./db/connectDB");
-const errorHandlerMiddleware = require("./middlewares/error-handler");
-const notFound = require("./middlewares/notFound");
-const authRouter = require("./auth/auth.route");
-const userRouter = require("./user/user.route");
+import connectDB from "./db/connectDB";
+import errorHandlerMiddleware from "./middlewares/error-handler";
+import notFound from "./middlewares/notFound";
+import authRouter from "./auth/auth.route";
+import userRouter from "./user/user.route";
+
 
 const app = express();
 app.set("trust proxy", 1);

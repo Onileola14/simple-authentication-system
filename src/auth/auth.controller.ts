@@ -1,10 +1,11 @@
-const User = require("../models/User");
+
+import User from "../models/User";
 const { StatusCodes } = require("http-status-codes");
 const { UnauthenticatedError, NotFoundError, BadRequestError, UnauthorizedError } = require("../errors");
 const { createJWT, attachCookiesToResponse } = require("../shared/jwt");
 const createTokenUser = require("../shared/createTokenUser");
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
   const { name, password, email, role } = req.body;
   const isUserExist = await User.findOne({ email });
   if (isUserExist) {
@@ -22,7 +23,7 @@ const register = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };
 
-const login = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     throw new BadRequestError("please provide email and password");
@@ -43,7 +44,7 @@ const login = async (req, res) => {
 };
 
 
-const logout = async (req, res) => {
+export const logout = async (req, res) => {
   res.cookie("token", "logout", {
     httpOnly: true,
     expires: new Date(Date.now()),
@@ -52,4 +53,4 @@ const logout = async (req, res) => {
 }
 
 
-module.exports = { register, login, logout };
+
