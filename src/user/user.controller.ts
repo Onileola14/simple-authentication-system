@@ -1,6 +1,7 @@
-const User = require("../models/User");
-const { createPermission } = require("../shared/checkPermission");
-const { StatusCodes } = require("http-status-codes");
+import { User } from "../models/User";
+import { createPermission } from "../shared/checkPermission";
+import { StatusCodes } from "http-status-codes";
+import { Request, Response } from "express";
 const {
   UnauthenticatedError,
   NotFoundError,
@@ -8,11 +9,11 @@ const {
   UnauthorizedError,
 } = require("../errors");
 
-const getAllUsers = async (req, res) => {
+export const getAllUsers = async (req:Request, res:Response) => {
   const users = await User.find({ role: { $ne: "admin" } }).select("-password");
   res.status(StatusCodes.OK).json({ users });
 };
-const getSingleUser = async (req, res) => {
+export const getSingleUser = async(req:Request, res:Response) => {
   const { id: userId } = req.params;
   createPermission(req.user, userId);
   const user = await User.findOne({ _id: userId }).select("-password");
@@ -22,7 +23,7 @@ const getSingleUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user });
 };
 
-const deleteUser = async (req, res) => {
+export const deleteUser = async (req:Request, res:Response) => {
   const { id: userId } = req.params;
   createPermission(req.user, userId);
   const user = await User.findOneAndDelete({ _id: userId });
@@ -32,7 +33,7 @@ const deleteUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "user deleted successfully" });
 };
 
-const updateUser = async (req, res) => {
+export const updateUser = async (req:Request, res:Response)=> {
   const { id: userId } = req.params;
   createPermission(req.user, userId);
 
@@ -52,7 +53,7 @@ const updateUser = async (req, res) => {
   res.status(StatusCodes.OK).json({ user });
 };
 
-const updateUserPassword = async (req, res) => {
+export const updateUserPassword = async (req:Request, res:Response) => {
   const { id: userId } = req.params;
   createPermission(req.user, userId);
 
@@ -76,5 +77,3 @@ const updateUserPassword = async (req, res) => {
 
   res.status(StatusCodes.OK).json({ msg: "password updated successfully" });
 };
-
-module.exports = { getAllUsers, getSingleUser, deleteUser, updateUser, updateUserPassword };

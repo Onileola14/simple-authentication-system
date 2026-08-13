@@ -1,17 +1,18 @@
-const jwt = require("jsonwebtoken");
+import type { Response } from "express";
+import jwt from "jsonwebtoken"
 
-const createJWT = ({payload}) => {
+export const createJWT = ({payload}) => {
   const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   });
   return token;
 };
 
-const isTokenValid = (token) => {
+export const isTokenValid = (token) => {
   return jwt.verify(token, process.env.JWT_SECRET);
 };
 
-const attachCookiesToResponse = (res, user) => {
+export const attachCookiesToResponse = (res:Response, user) => {
   const token = createJWT({payload: user});
   const oneDay = 1000 * 60 * 60 * 24;
 
@@ -23,4 +24,3 @@ const attachCookiesToResponse = (res, user) => {
   });
 };
 
-module.exports = { createJWT, isTokenValid, attachCookiesToResponse };
