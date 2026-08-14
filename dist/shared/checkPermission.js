@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createPermission = void 0;
+const { UnauthorizedError } = require("../errors");
+const createPermission = (reqUser, resourceUserId) => {
+    if (reqUser.role === "admin")
+        return;
+    if (reqUser.userId === resourceUserId.toString())
+        return;
+    throw new UnauthorizedError("Not authorized to access this route");
+};
+exports.createPermission = createPermission;
+//# sourceMappingURL=checkPermission.js.map

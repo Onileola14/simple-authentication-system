@@ -1,0 +1,1 @@
+{"version":3,"file":"createTokenUser.js","sourceRoot":"","sources":["../../src/shared/createTokenUser.ts"],"names":[],"mappings":";;;AAAO,MAAM,eAAe,GAAG,CAAC,IAAK,EAAG,EAAE;IACxC,OAAO,EAAE,IAAI,EAAE,IAAI,CAAC,IAAI,EAAE,MAAM,EAAE,IAAI,CAAC,GAAG,EAAE,IAAI,EAAE,IAAI,CAAC,IAAI,EAAE,KAAK,EAAE,IAAI,CAAC,KAAK,EAAE,CAAC;AACnF,CAAC,CAAA;AAFY,QAAA,eAAe,GAAf,eAAe,CAE3B"}

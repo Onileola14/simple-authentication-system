@@ -1,7 +1,11 @@
-
-import User from "../models/User";
-const { StatusCodes } = require("http-status-codes");
-const { UnauthenticatedError, NotFoundError, BadRequestError, UnauthorizedError } = require("../errors");
+import { User } from "../models/User";
+import { StatusCodes } from "http-status-codes";
+const {
+  UnauthenticatedError,
+  NotFoundError,
+  BadRequestError,
+  UnauthorizedError,
+} = require("../errors");
 const { createJWT, attachCookiesToResponse } = require("../shared/jwt");
 const createTokenUser = require("../shared/createTokenUser");
 
@@ -13,7 +17,7 @@ export const register = async (req, res) => {
   }
 
   const isFirstAccount = (await User.countDocuments({})) === 0;
-  const userRole = isFirstAccount ? "admin" : 'user';
+  const userRole = isFirstAccount ? "admin" : "user";
   req.body.role = userRole;
 
   const user = await User.create({ name, password, email, role: userRole });
@@ -43,14 +47,10 @@ export const login = async (req, res) => {
   res.status(StatusCodes.OK).json({ user: tokenUser });
 };
 
-
 export const logout = async (req, res) => {
   res.cookie("token", "logout", {
     httpOnly: true,
     expires: new Date(Date.now()),
   });
   res.status(StatusCodes.OK).json({ msg: "user logged out!" });
-}
-
-
-
+};
