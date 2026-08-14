@@ -1,4 +1,4 @@
-import { User } from "../models/User";
+import  User  from "../models/User";
 import { createPermission } from "../shared/checkPermission";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response } from "express";
