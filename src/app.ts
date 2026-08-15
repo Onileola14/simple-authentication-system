@@ -1,7 +1,7 @@
 
 import dotenv from "dotenv";
 dotenv.config();
-import "express-async-error";
+import "async-express-error";
 
 // Third-party packages
 import express from "express";
