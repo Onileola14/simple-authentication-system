@@ -1,4 +1,4 @@
-
-export const createTokenUser = (user) => {
-  return { name: user.name, userId: user._id, role: user.role, email: user.email };
+import { TokenUserPayload } from "./src";
+export const createTokenUser = (user: TokenUserPayload) => {
+  return { name: user.name, userId: user.id, role: user.role, email: user.email };
 }

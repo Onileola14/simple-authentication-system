@@ -11,7 +11,7 @@ import helmet from "helmet";
 
 
 // Local modules
-import connectDB from "./db/connectDB";
+import {connectDB} from "./db/connectDB";
 import errorHandlerMiddleware from "./middlewares/error-handler";
 import notFound from "./middlewares/notFound";
 import authRouter from "./auth/auth.route";
@@ -39,10 +39,14 @@ app.use(notFound);
 app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 3000;
+const MONGO_URI = process.env.MONGO_URI || "";
+if (!MONGO_URI) {
+  throw new Error("MONGO_URI environment variable is required");
+}
 
 const start = async () => {
   try {
-    await connectDB(process.env.MONGO_URI);
+    await connectDB(MONGO_URI);
     app.listen(port, () => {
       console.log(`Server is running on port ${port}`);
     });

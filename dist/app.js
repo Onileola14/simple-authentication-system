@@ -12,7 +12,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 // Local modules
-const connectDB_1 = __importDefault(require("./db/connectDB"));
+const connectDB_1 = require("./db/connectDB");
 const error_handler_1 = __importDefault(require("./middlewares/error-handler"));
 const notFound_1 = __importDefault(require("./middlewares/notFound"));
 const auth_route_1 = __importDefault(require("./auth/auth.route"));
@@ -34,9 +34,13 @@ app.use("/api/v2/user", user_route_1.default);
 app.use(notFound_1.default);
 app.use(error_handler_1.default);
 const port = process.env.PORT || 3000;
+const MONGO_URI = process.env.MONGO_URI || "";
+if (!MONGO_URI) {
+    throw new Error("MONGO_URI environment variable is required");
+}
 const start = async () => {
     try {
-        await (0, connectDB_1.default)(process.env.MONGO_URI);
+        await (0, connectDB_1.connectDB)(MONGO_URI);
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });
