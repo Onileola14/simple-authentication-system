@@ -20,7 +20,7 @@ const authenticateUser = async (req:Request, res:Response, next:NextFunction) =>
   }
 };
 
-const authorizePermissions = (...roles : []) => {
+const authorizePermissions = (...roles : string[]) => {
   return  (req:Request, res:Response, next:NextFunction) => {
     if (!roles.includes(req.user.role)) {
       throw new UnauthorizedError("Unauthorized to access this route");
