@@ -1,6 +1,7 @@
-const rateLimit = require("express-rate-limit");
 
-const authLimiter = rateLimit({
+import { rateLimit } from "express-rate-limit";
+
+export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
   max: 10, // 10 requests per IP per window
   standardHeaders: true,
@@ -10,4 +11,3 @@ const authLimiter = rateLimit({
   },
 });
 
-module.exports = { authLimiter };
