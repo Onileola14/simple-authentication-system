@@ -1,14 +1,15 @@
 import User from "../models/User";
 import { StatusCodes } from "http-status-codes";
 import { Request, Response} from "express";
+
 const {
   UnauthenticatedError,
   NotFoundError,
   BadRequestError,
   UnauthorizedError,
 } = require("../errors");
-const { createJWT, attachCookiesToResponse } = require("../shared/jwt");
-const createTokenUser = require("../shared/createTokenUser");
+import { createJWT, attachCookiesToResponse } from "../shared/jwt";
+import { createTokenUser } from "../shared/createTokenUser";
 
 export const register = async (req: Request, res: Response) => {
   const { name, password, email, role } = req.body;
