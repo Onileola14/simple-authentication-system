@@ -7,8 +7,8 @@ exports.logout = exports.login = exports.register = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const http_status_codes_1 = require("http-status-codes");
 const { UnauthenticatedError, NotFoundError, BadRequestError, UnauthorizedError, } = require("../errors");
-const { createJWT, attachCookiesToResponse } = require("../shared/jwt");
-const createTokenUser = require("../shared/createTokenUser");
+const jwt_1 = require("../shared/jwt");
+const createTokenUser_1 = require("../shared/createTokenUser");
 const register = async (req, res) => {
     const { name, password, email, role } = req.body;
     const isUserExist = await User_1.default.findOne({ email });
@@ -19,9 +19,9 @@ const register = async (req, res) => {
     const userRole = isFirstAccount ? "admin" : "user";
     req.body.role = userRole;
     const user = await User_1.default.create({ name, password, email, role: userRole });
-    const tokenUser = createTokenUser(user);
-    const token = createJWT({ payload: tokenUser });
-    attachCookiesToResponse(res, tokenUser);
+    const tokenUser = (0, createTokenUser_1.createTokenUser)(user);
+    const token = (0, jwt_1.createJWT)({ payload: tokenUser });
+    (0, jwt_1.attachCookiesToResponse)(res, tokenUser);
     res.status(http_status_codes_1.StatusCodes.CREATED).json({ user: tokenUser });
 };
 exports.register = register;
@@ -38,9 +38,9 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) {
         throw new UnauthenticatedError("invalid credentials");
     }
-    const tokenUser = createTokenUser(user);
-    const token = createJWT({ payload: tokenUser });
-    attachCookiesToResponse(res, tokenUser);
+    const tokenUser = (0, createTokenUser_1.createTokenUser)(user);
+    const token = (0, jwt_1.createJWT)({ payload: tokenUser });
+    (0, jwt_1.attachCookiesToResponse)(res, tokenUser);
     res.status(http_status_codes_1.StatusCodes.OK).json({ user: tokenUser });
 };
 exports.login = login;
