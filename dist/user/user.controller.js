@@ -25,7 +25,7 @@ const getSingleUser = async (req, res) => {
 exports.getSingleUser = getSingleUser;
 const deleteUser = async (req, res) => {
     const { id: userId } = req.params;
-    (0, checkPermission_1.createPermission)(req.user, userId);
+    (0, checkPermission_1.createPermission)(req.user, "userId");
     const user = await User_1.default.findOneAndDelete({ _id: userId });
     if (!user) {
         throw new NotFoundError(`No user with id : ${userId}`);

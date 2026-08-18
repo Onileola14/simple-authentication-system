@@ -1,5 +1,5 @@
 
-import { UnauthorizedError } from "../errors";
+import { UnauthorizedError } from "../errors/unauthorized";
 import { TokenUserPayload } from "../shared/src";
 
 export const createPermission = (
