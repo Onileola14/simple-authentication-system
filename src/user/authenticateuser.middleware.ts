@@ -1,8 +1,8 @@
 import { isTokenValid } from "../shared/jwt";
 import type { Request, Response, NextFunction } from "express";
-const { UnauthenticatedError, UnauthorizedError } = require("../errors");
+import { UnauthenticatedError, UnauthorizedError } from "../errors";
 
-const authenticateUser = async (req:Request, res:Response, next:NextFunction) => {
+export const authenticateUser = async (req: Request, res: Response, next: NextFunction) => {
   const token = req.signedCookies.token;
   try {
     if (!token) {
@@ -12,6 +12,7 @@ const authenticateUser = async (req:Request, res:Response, next:NextFunction) =>
     req.user = {
       userId: payload.userId,
       name: payload.name,
+      email: payload.email,
       role: payload.role,
     };
     next();
@@ -20,13 +21,11 @@ const authenticateUser = async (req:Request, res:Response, next:NextFunction) =>
   }
 };
 
-const authorizePermissions = (...roles : string[]) => {
-  return  (req:Request, res:Response, next:NextFunction) => {
-    if (!roles.includes(req.user.role)) {
+export const authorizePermissions = (...roles: string[]) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user || !roles.includes(req.user.role)) {
       throw new UnauthorizedError("Unauthorized to access this route");
     }
     next();
   };
 };
-
-module.exports = { authenticateUser, authorizePermissions };
