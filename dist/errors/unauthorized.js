@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.UnauthorizedError = void 0;
 const { StatusCodes } = require('http-status-codes');
 const CustomAPIError = require('./custom-api');
 class UnauthorizedError extends CustomAPIError {
@@ -8,5 +9,5 @@ class UnauthorizedError extends CustomAPIError {
         this.statusCode = StatusCodes.FORBIDDEN;
     }
 }
-module.exports = UnauthorizedError;
+exports.UnauthorizedError = UnauthorizedError;
 //# sourceMappingURL=unauthorized.js.map

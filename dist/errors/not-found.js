@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.NotFoundError = void 0;
 const { StatusCodes } = require('http-status-codes');
 const CustomAPIError = require('./custom-api');
 class NotFoundError extends CustomAPIError {
@@ -8,5 +9,5 @@ class NotFoundError extends CustomAPIError {
         this.statusCode = StatusCodes.NOT_FOUND;
     }
 }
-module.exports = NotFoundError;
+exports.NotFoundError = NotFoundError;
 //# sourceMappingURL=not-found.js.map
