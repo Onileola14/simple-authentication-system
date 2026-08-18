@@ -1,14 +1,6 @@
 
-import { CustomAPIError } from './custom-api';
-import { UnauthenticatedError } from './unauthenticated';
-import { NotFoundError } from './not-found';
-import { BadRequestError } from './bad-request';
-import { UnauthorizedError } from './unauthorized';
-
-export = {
-  CustomAPIError,
-  UnauthenticatedError,
-  NotFoundError,
-  BadRequestError,
-  UnauthorizedError,
-};
+export { CustomAPIError } from "./custom-api";
+export { UnauthenticatedError } from "./unauthenticated";
+export { NotFoundError } from "./not-found";
+export { BadRequestError } from "./bad-request";
+export { UnauthorizedError } from "./unauthorized";
