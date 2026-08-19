@@ -7,7 +7,7 @@ exports.updateUserPassword = exports.updateUser = exports.deleteUser = exports.g
 const User_1 = __importDefault(require("../models/User"));
 const checkPermission_1 = require("../shared/checkPermission");
 const http_status_codes_1 = require("http-status-codes");
-const { UnauthenticatedError, NotFoundError, BadRequestError, UnauthorizedError, } = require("../errors");
+const errors_1 = require("../errors");
 const getAllUsers = async (req, res) => {
     const users = await User_1.default.find({ role: { $ne: "admin" } }).select("-password");
     res.status(http_status_codes_1.StatusCodes.OK).json({ users });
@@ -17,19 +17,17 @@ const getSingleUser = async (req, res) => {
     const { id: userId } = req.params;
     (0, checkPermission_1.createPermission)(req.user, userId);
     const user = await User_1.default.findOne({ _id: userId }).select("-password");
-    if (!user) {
-        throw new NotFoundError(`No user with id : ${userId}`);
-    }
+    if (!user)
+        throw new errors_1.NotFoundError(`No user with id : ${userId}`);
     res.status(http_status_codes_1.StatusCodes.OK).json({ user });
 };
 exports.getSingleUser = getSingleUser;
 const deleteUser = async (req, res) => {
     const { id: userId } = req.params;
-    (0, checkPermission_1.createPermission)(req.user, "userId");
+    (0, checkPermission_1.createPermission)(req.user, userId); // was createPermission(req.user, "userId") — literal string, not the variable
     const user = await User_1.default.findOneAndDelete({ _id: userId });
-    if (!user) {
-        throw new NotFoundError(`No user with id : ${userId}`);
-    }
+    if (!user)
+        throw new errors_1.NotFoundError(`No user with id : ${userId}`);
     res.status(http_status_codes_1.StatusCodes.OK).json({ msg: "user deleted successfully" });
 };
 exports.deleteUser = deleteUser;
@@ -46,9 +44,8 @@ const updateUser = async (req, res) => {
         new: true,
         runValidators: true,
     }).select("-password");
-    if (!user) {
-        throw new NotFoundError(`No user with id : ${userId}`);
-    }
+    if (!user)
+        throw new errors_1.NotFoundError(`No user with id : ${userId}`);
     res.status(http_status_codes_1.StatusCodes.OK).json({ user });
 };
 exports.updateUser = updateUser;
@@ -57,15 +54,14 @@ const updateUserPassword = async (req, res) => {
     (0, checkPermission_1.createPermission)(req.user, userId);
     const { oldPassword, newPassword } = req.body;
     if (!oldPassword || !newPassword) {
-        throw new BadRequestError("please provide old and new password");
+        throw new errors_1.BadRequestError("please provide old and new password");
     }
-    const user = await User_1.default.findOne({ _id: userId });
-    if (!user) {
-        throw new NotFoundError(`No user with id : ${userId}`);
-    }
+    const user = await User_1.default.findOne({ _id: userId }).select("+password"); // was missing — password has select:false in the schema
+    if (!user)
+        throw new errors_1.NotFoundError(`No user with id : ${userId}`);
     const isPasswordCorrect = await user.comparePassword(oldPassword);
     if (!isPasswordCorrect) {
-        throw new UnauthenticatedError("invalid credentials");
+        throw new errors_1.UnauthenticatedError("invalid credentials");
     }
     user.password = newPassword;
     await user.save();

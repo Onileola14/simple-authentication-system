@@ -1,74 +1,35 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const { body, validationResult } = require("express-validator");
-const { BadRequestError } = require("../errors");
+exports.validateUpdatePassword = exports.validateUpdateUser = exports.validateLogin = exports.validateRegister = void 0;
+const express_validator_1 = require("express-validator");
+const errors_1 = require("../errors");
 const withValidationErrors = (req, res, next) => {
-    const errors = validationResult(req);
+    const errors = (0, express_validator_1.validationResult)(req);
     if (!errors.isEmpty()) {
         const messages = errors.array().map((err) => err.msg);
-        throw new BadRequestError(messages.join(", "));
+        throw new errors_1.BadRequestError(messages.join(", "));
     }
     next();
 };
-const validateRegister = [
-    body("name")
-        .trim()
-        .notEmpty()
-        .withMessage("name is required")
-        .isLength({ min: 3 })
-        .withMessage("name must be at least 3 characters"),
-    body("email")
-        .trim()
-        .notEmpty()
-        .withMessage("email is required")
-        .isEmail()
-        .withMessage("please provide a valid email")
-        .normalizeEmail(),
-    body("password")
-        .notEmpty()
-        .withMessage("password is required")
-        .isLength({ min: 6 })
-        .withMessage("password must be at least 6 characters"),
+exports.validateRegister = [
+    (0, express_validator_1.body)("name").trim().notEmpty().withMessage("name is required").isLength({ min: 3 }).withMessage("name must be at least 3 characters"),
+    (0, express_validator_1.body)("email").trim().notEmpty().withMessage("email is required").isEmail().withMessage("please provide a valid email").normalizeEmail(),
+    (0, express_validator_1.body)("password").notEmpty().withMessage("password is required").isLength({ min: 6 }).withMessage("password must be at least 6 characters"),
     withValidationErrors,
 ];
-const validateLogin = [
-    body("email")
-        .trim()
-        .notEmpty()
-        .withMessage("email is required")
-        .isEmail()
-        .withMessage("please provide a valid email")
-        .normalizeEmail(),
-    body("password").notEmpty().withMessage("password is required"),
+exports.validateLogin = [
+    (0, express_validator_1.body)("email").trim().notEmpty().withMessage("email is required").isEmail().withMessage("please provide a valid email").normalizeEmail(),
+    (0, express_validator_1.body)("password").notEmpty().withMessage("password is required"),
     withValidationErrors,
 ];
-const validateUpdateUser = [
-    body("name")
-        .optional()
-        .trim()
-        .isLength({ min: 3 })
-        .withMessage("name must be at least 3 characters"),
-    body("email")
-        .optional()
-        .trim()
-        .isEmail()
-        .withMessage("please provide a valid email")
-        .normalizeEmail(),
+exports.validateUpdateUser = [
+    (0, express_validator_1.body)("name").optional().trim().isLength({ min: 3 }).withMessage("name must be at least 3 characters"),
+    (0, express_validator_1.body)("email").optional().trim().isEmail().withMessage("please provide a valid email").normalizeEmail(),
     withValidationErrors,
 ];
-const validateUpdatePassword = [
-    body("oldPassword").notEmpty().withMessage("old password is required"),
-    body("newPassword")
-        .notEmpty()
-        .withMessage("new password is required")
-        .isLength({ min: 6 })
-        .withMessage("new password must be at least 6 characters"),
+exports.validateUpdatePassword = [
+    (0, express_validator_1.body)("oldPassword").notEmpty().withMessage("old password is required"),
+    (0, express_validator_1.body)("newPassword").notEmpty().withMessage("new password is required").isLength({ min: 6 }).withMessage("new password must be at least 6 characters"),
     withValidationErrors,
 ];
-module.exports = {
-    validateRegister,
-    validateLogin,
-    validateUpdateUser,
-    validateUpdatePassword,
-};
 //# sourceMappingURL=validators.js.map

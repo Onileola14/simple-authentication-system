@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CustomAPIError = void 0;
 class CustomAPIError extends Error {
+    statusCode;
     constructor(message) {
         super(message);
     }

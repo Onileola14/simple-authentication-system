@@ -1,1 +1,1 @@
-{"version":3,"file":"notFound.js","sourceRoot":"","sources":["../../src/middlewares/notFound.ts"],"names":[],"mappings":";;;AACO,MAAM,QAAQ,GAAG,CAAC,GAAW,EAAE,GAAY,EAAE,EAAE;IACpD,GAAG,CAAC,MAAM,CAAC,GAAG,CAAC,CAAC,IAAI,CAAC,sBAAsB,CAAC,CAAC;AAC/C,CAAC,CAAA;AAFY,QAAA,QAAQ,GAAR,QAAQ,CAEpB"}
+{"version":3,"file":"notFound.js","sourceRoot":"","sources":["../../src/middlewares/notFound.ts"],"names":[],"mappings":";;AAEA,MAAM,QAAQ,GAAG,CAAC,GAAY,EAAE,GAAa,EAAE,EAAE;IAC/C,GAAG,CAAC,MAAM,CAAC,GAAG,CAAC,CAAC,IAAI,CAAC,sBAAsB,CAAC,CAAC;AAC/C,CAAC,CAAC;kBAEa,QAAQ"}

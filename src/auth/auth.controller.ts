@@ -1,18 +1,12 @@
 import User from "../models/User";
 import { StatusCodes } from "http-status-codes";
-import { Request, Response} from "express";
-
-const {
-  UnauthenticatedError,
-  NotFoundError,
-  BadRequestError,
-  UnauthorizedError,
-} = require("../errors");
+import { Request, Response } from "express";
+import { UnauthenticatedError, BadRequestError } from "../errors";
 import { createJWT, attachCookiesToResponse } from "../shared/jwt";
 import { createTokenUser } from "../shared/createTokenUser";
 
 export const register = async (req: Request, res: Response) => {
-  const { name, password, email, role } = req.body;
+  const { name, password, email } = req.body;
   const isUserExist = await User.findOne({ email });
   if (isUserExist) {
     throw new BadRequestError("user already exist , proceed to login");
@@ -20,11 +14,9 @@ export const register = async (req: Request, res: Response) => {
 
   const isFirstAccount = (await User.countDocuments({})) === 0;
   const userRole = isFirstAccount ? "admin" : "user";
-  req.body.role = userRole;
 
   const user = await User.create({ name, password, email, role: userRole });
   const tokenUser = createTokenUser(user);
-  const token = createJWT({ payload: tokenUser });
   attachCookiesToResponse(res, tokenUser);
   res.status(StatusCodes.CREATED).json({ user: tokenUser });
 };
@@ -44,7 +36,6 @@ export const login = async (req: Request, res: Response) => {
   }
 
   const tokenUser = createTokenUser(user);
-  const token = createJWT({ payload: tokenUser });
   attachCookiesToResponse(res, tokenUser);
   res.status(StatusCodes.OK).json({ user: tokenUser });
 };

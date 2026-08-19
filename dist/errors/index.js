@@ -1,14 +1,14 @@
 "use strict";
-const custom_api_1 = require("./custom-api");
-const unauthenticated_1 = require("./unauthenticated");
-const not_found_1 = require("./not-found");
-const bad_request_1 = require("./bad-request");
-const unauthorized_1 = require("./unauthorized");
-module.exports = {
-    CustomAPIError: custom_api_1.CustomAPIError,
-    UnauthenticatedError: unauthenticated_1.UnauthenticatedError,
-    NotFoundError: not_found_1.NotFoundError,
-    BadRequestError: bad_request_1.BadRequestError,
-    UnauthorizedError: unauthorized_1.UnauthorizedError,
-};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.UnauthorizedError = exports.BadRequestError = exports.NotFoundError = exports.UnauthenticatedError = exports.CustomAPIError = void 0;
+var custom_api_1 = require("./custom-api");
+Object.defineProperty(exports, "CustomAPIError", { enumerable: true, get: function () { return custom_api_1.CustomAPIError; } });
+var unauthenticated_1 = require("./unauthenticated");
+Object.defineProperty(exports, "UnauthenticatedError", { enumerable: true, get: function () { return unauthenticated_1.UnauthenticatedError; } });
+var not_found_1 = require("./not-found");
+Object.defineProperty(exports, "NotFoundError", { enumerable: true, get: function () { return not_found_1.NotFoundError; } });
+var bad_request_1 = require("./bad-request");
+Object.defineProperty(exports, "BadRequestError", { enumerable: true, get: function () { return bad_request_1.BadRequestError; } });
+var unauthorized_1 = require("./unauthorized");
+Object.defineProperty(exports, "UnauthorizedError", { enumerable: true, get: function () { return unauthorized_1.UnauthorizedError; } });
 //# sourceMappingURL=index.js.map
