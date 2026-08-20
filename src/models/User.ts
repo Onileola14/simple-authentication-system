@@ -32,16 +32,15 @@ const userSchema = new Schema<IUser>(
       minlength: 6,
       select: false,
     },
-    role : {
+    role: {
       type: String,
       enum: ["user", "admin"],
       default: "user",
-    },  
-
+    },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 // Hash password before saving
@@ -54,11 +53,11 @@ userSchema.pre("save", async function () {
 
 // Compare password
 userSchema.methods.comparePassword = async function (
-  candidatePassword: string
+  candidatePassword: string,
 ): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
+const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
 
-// export default User;
+export default User;
