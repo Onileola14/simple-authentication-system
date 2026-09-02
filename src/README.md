@@ -4,6 +4,13 @@ A JWT-based authentication and role-based access control (RBAC) API built with
 Express and MongoDB (Mongoose). Supports registration, login/logout,
 role-protected routes, and self-service profile/password updates.
 
+## Front end
+
+A React + Vite + Tailwind UI for this API lives at
+[auth-system-frontend](https://github.com/Onileola14/auth-system-frontend) —
+sign-in / sign-up and an RBAC account console that talk to these endpoints via
+an `httpOnly` JWT cookie. Point it at this server with `VITE_API_BASE`.
+
 ## Features
 
 - Register / login / logout with JWT stored in an `httpOnly`, signed cookie
