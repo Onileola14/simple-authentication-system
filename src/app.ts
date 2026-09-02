@@ -1,4 +1,3 @@
-
 import dotenv from "dotenv";
 dotenv.config();
 import "async-express-error";
@@ -8,6 +7,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import helmet from "helmet";
+import path from "path";
 
 
 // Local modules
@@ -26,13 +26,24 @@ app.use(cookieParser(process.env.JWT_SECRET));
 app.use(helmet());
 app.use(cors());
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("simple authentication system");
-});
+// Static front end — built from client/ into ./public (see `npm run build:client`).
+// Serving same-origin means the httpOnly JWT cookie flows without CORS.
+const publicDir = path.join(process.cwd(), "public");
+app.use(express.static(publicDir));
 
+// API routes
 app.use("/api/v2/auth", authRouter);
 app.use("/api/v2/user", userRouter);
+
+// SPA fallback: serve the UI for any non-API GET that didn't match a static file.
+app.use((req, res, next) => {
+  if (req.method === "GET" && !req.path.startsWith("/api")) {
+    return res.sendFile(path.join(publicDir, "index.html"), (err) => {
+      if (err) next();
+    });
+  }
+  next();
+});
 
 // Error handling
 app.use(notFound);

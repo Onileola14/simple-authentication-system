@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500;700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import 'tailwindcss';
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: #0b0c0a;
+  color: #eef0e8;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: #c6f24e;
+  color: #0b0c0a;
+}
+
+/* Hide scrollbars until scrolling */
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+@theme {
+  --font-slab: 'Roboto Slab', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --color-ink: #0b0c0a;
+  --color-paper: #eef0e8;
+  --color-acid: #c6f24e;
+}

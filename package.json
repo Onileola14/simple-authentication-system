@@ -5,7 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "dev": "npx tsc && nodemon dist/app.js"
+    "dev": "npx tsc && nodemon dist/app.js",
+    "build:client": "npm --prefix client install && npm --prefix client run build"
   },
   "author": "",
   "license": "ISC",
