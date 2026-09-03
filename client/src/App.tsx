@@ -769,6 +769,7 @@ function Dashboard({
                   { l: "List all users", ep: "GET /user", to: "directory" as const },
                   { l: "Inspect any user", ep: "GET /user/:id", to: "directory" as const },
                   { l: "Remove a user", ep: "DELETE /user/:id", to: "directory" as const },
+                  { l: "View / edit my profile", ep: "PATCH /user/:id", to: "credentials" as const },
                 ]
               : [
                   { l: "Update name / email", ep: "PATCH /user/:id", to: "credentials" as const },
@@ -786,12 +787,22 @@ function Dashboard({
               </button>
             ))}
           </div>
-          <button
-            onClick={() => setModal(isAdmin ? "directory" : "credentials")}
-            className={`${MONO} mt-6 w-full border border-paper/25 py-2.5 text-[11px] uppercase tracking-[0.18em] text-paper/70 transition-colors hover:border-acid hover:text-acid`}
-          >
-            {isAdmin ? "Open user directory" : "Manage credentials"}
-          </button>
+          <div className="mt-6 space-y-2">
+            <button
+              onClick={() => setModal(isAdmin ? "directory" : "credentials")}
+              className={`${MONO} w-full border border-acid bg-acid py-2.5 text-[11px] font-bold uppercase tracking-[0.18em] text-ink transition-colors hover:bg-transparent hover:text-acid`}
+            >
+              {isAdmin ? "Open user directory" : "Manage credentials"}
+            </button>
+            {isAdmin && (
+              <button
+                onClick={() => setModal("credentials")}
+                className={`${MONO} w-full border border-paper/25 py-2.5 text-[11px] uppercase tracking-[0.18em] text-paper/70 transition-colors hover:border-acid hover:text-acid`}
+              >
+                Manage my profile
+              </button>
+            )}
+          </div>
         </section>
       </div>
 
